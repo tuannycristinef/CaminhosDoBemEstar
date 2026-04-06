@@ -1,33 +1,17 @@
 import React from "react";
-import logo from "../assets/logo.png"; // O logo da flor de lótus
 import yogaImg from "../assets/yoga-woman.png"; // A imagem da mulher fazendo yoga
 import painImg from "../assets/pain-person.png"; // A imagem da pessoa sentindo dor
 import { ReactComponent as WhatsappIcon } from "../assets/whatsapp.svg";
 import { ReactComponent as InstagramIcon } from "../assets/instagram.svg";
 import MobileFloatingIsland from "../components/MobileFloatingIsland";
+import DesktopHeader from "../components/DesktopHeader";
 
 export default function Home() {
   return (
     <div className="w-full min-h-screen bg-gray-50 pt-24 font-sans md:pt-0">
-      {/* Header */}
-      <header className="relative hidden md:block">
-        <div className="relative bg-gray-50 py-4 lg:py-6">
-          <div className="absolute left-6 top-1/2 flex -translate-y-1/2 items-center md:left-8 lg:left-10">
-            <img src={logo} alt="Logo" className="h-12 w-12" />
-          </div>
-          <div className="mx-auto flex w-full max-w-7xl items-center justify-center px-2 md:px-4 lg:px-6">
-            <nav className="flex flex-wrap justify-center gap-3 text-lg font-semibold text-purple-500 md:gap-6 md:text-xl lg:gap-12 lg:text-2xl">
-              <a href="/" className="transition-all hover:text-yellow-500">Exercícios</a>
-              <a href="/alimentacao" className="transition-all hover:text-yellow-500">Alimentação</a>
-              <a href="/bem-estar" className="transition-all hover:text-yellow-500">Bem-Estar</a>
-              <a href="/sobre" className="transition-all hover:text-yellow-500">Sobre nós</a>
-            </nav>
-          </div>
-        </div>
-        <div className="h-2 w-full bg-yellow-500 shadow-md" />
-      </header>
+      <DesktopHeader activeTab="inicio" />
 
-      <MobileFloatingIsland activeTab="home" />
+      <MobileFloatingIsland activeTab="inicio" />
 
       <main className="mx-auto max-w-6xl px-6 py-12">
         {/* Seção Superior: Boas-vindas */}

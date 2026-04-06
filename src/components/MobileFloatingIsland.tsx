@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 
-type TabKey = "home" | "exercicios" | "alimentacao" | "bem-estar" | "sobre";
+type TabKey = "inicio" | "exercicios" | "alimentacao" | "bem-estar" | "sobre";
 
 type MobileFloatingIslandProps = {
   activeTab: TabKey;
 };
 
 const menuItems: Array<{ key: TabKey; label: string; to: string }> = [
-  { key: "home", label: "Exercicios", to: "/" },
+  { key: "inicio", label: "Inicio", to: "/" },
+  { key: "exercicios", label: "Exercicios", to: "/exercicios" },
   { key: "alimentacao", label: "Alimentacao", to: "/alimentacao" },
   { key: "bem-estar", label: "Bem-Estar", to: "/bem-estar" },
   { key: "sobre", label: "Sobre nos", to: "/sobre" },
