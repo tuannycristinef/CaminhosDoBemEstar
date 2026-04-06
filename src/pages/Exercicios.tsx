@@ -1,12 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
+import MobileFloatingIsland from "../components/MobileFloatingIsland";
 
 export default function Exercicios() {
   return (
-    <div className="w-full min-h-screen bg-gray-50 font-sans">
+    <div className="w-full min-h-screen bg-gray-50 pt-24 font-sans md:pt-0">
       {/* Header */}
-      <header className="relative">
+      <header className="relative hidden md:block">
         <div className="relative bg-gray-50 py-4 lg:py-6">
           <div className="absolute left-6 top-1/2 flex -translate-y-1/2 items-center md:left-8 lg:left-10">
             <Link to="/">
@@ -24,6 +25,8 @@ export default function Exercicios() {
         </div>
         <div className="h-2 w-full bg-yellow-500 shadow-md" />
       </header>
+
+      <MobileFloatingIsland activeTab="home" />
 
       <main className="mx-auto max-w-5xl px-4 py-10">
         <h1 className="text-center text-5xl font-bold text-purple-500 mb-10 md:text-6xl">
