@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ArrowDown, ArrowRight, HeartHandshake, Sparkles } from "lucide-react";
+import { ArrowDown, ArrowRight, Calculator, HeartHandshake, Sparkles } from "lucide-react";
 import yogaImg from "../assets/yoga-woman.png";
 import painImg from "../assets/pain-person.png";
 import { ReactComponent as WhatsappIcon } from "../assets/whatsapp.svg";
@@ -28,12 +28,15 @@ export default function Home() {
               <p className="mt-5 max-w-xl text-lg leading-relaxed text-purple-100 md:text-xl">
                 Conviver com fibromialgia pode ser desafiador. Aqui você encontra informação, ideias de cuidado e apoio para seguir no seu ritmo.
               </p>
-              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                 <a href="#conteudos" className="inline-flex min-h-14 items-center justify-center gap-2 rounded-full bg-yellow-400 px-6 py-4 font-bold text-purple-950 transition hover:bg-yellow-300 focus:outline-none focus:ring-4 focus:ring-white/60">
                   Explorar conteúdos <ArrowDown size={19} aria-hidden="true" />
                 </a>
                 <Link to="/carteirinha" className="inline-flex min-h-14 items-center justify-center gap-2 rounded-full border border-white/50 px-6 py-4 font-semibold text-white transition hover:bg-white/10 focus:outline-none focus:ring-4 focus:ring-white/60">
                   Carteirinha da Fibromialgia <ArrowRight size={18} aria-hidden="true" />
+                </Link>
+                <Link to="/calculadora" className="inline-flex min-h-14 items-center justify-center gap-2 rounded-full border border-white/50 px-6 py-4 font-semibold text-white transition hover:bg-white/10 focus:outline-none focus:ring-4 focus:ring-white/60">
+                  <Calculator size={19} aria-hidden="true" /> Montar minha rotina <ArrowRight size={18} aria-hidden="true" />
                 </Link>
               </div>
             </div>

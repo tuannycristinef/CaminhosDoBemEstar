@@ -8,6 +8,7 @@ import BemEstar from "./pages/BemEstar";
 import Sobre from "./pages/Sobre";
 import AdminReceitas from "./pages/AdminReceitas";
 import Carteirinha from "./pages/Carteirinha";
+import CalculadoraBemEstar from "./pages/CalculadoraBemEstar";
 
 function AppRoutes() {
   const location = useLocation();
@@ -23,6 +24,7 @@ function AppRoutes() {
         <Route path="/exercicios" element={<Exercicios />} />
         <Route path="/alimentacao" element={<Alimentacao />} />
         <Route path="/bem-estar" element={<BemEstar />} />
+        <Route path="/calculadora" element={<CalculadoraBemEstar />} />
         <Route path="/sobre" element={<Sobre />} />
         <Route path="/carteirinha" element={<Carteirinha />} />
         <Route path="/admin/receitas" element={<AdminReceitas />} />

@@ -26,7 +26,7 @@ export default function Exercicios() {
   const [selectedDifficulty, setSelectedDifficulty] =
     useState<string>("Todos");
 
-  const exercises: Exercise[] = [
+  const exercises = useMemo<Exercise[]>(() => [
     {
       name: "Alongamento 90/90 de quadril",
       difficulty: "Médio",
@@ -82,7 +82,7 @@ export default function Exercicios() {
       difficulty: "Fácil",
       video: video11,
     },
-  ];
+  ], []);
 
   const filteredExercises = useMemo(() => {
     if (selectedDifficulty === "Todos") {
@@ -92,7 +92,7 @@ export default function Exercicios() {
     return exercises.filter(
       (exercise) => exercise.difficulty === selectedDifficulty
     );
-  }, [selectedDifficulty]);
+  }, [selectedDifficulty, exercises]);
 
   return (
     <div className="w-full min-h-screen bg-gray-50 pt-24 font-sans md:pt-0">
