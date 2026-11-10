@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/CaminhosDoBemEstar/static/css/main.00fe7799.css",
-    "main.js": "/CaminhosDoBemEstar/static/js/main.41e92afe.js",
+    "main.css": "/CaminhosDoBemEstar/static/css/main.e9bb165a.css",
+    "main.js": "/CaminhosDoBemEstar/static/js/main.d590fd9d.js",
     "static/js/453.5c6254c1.chunk.js": "/CaminhosDoBemEstar/static/js/453.5c6254c1.chunk.js",
     "static/media/alongamento-gluteos-quadril.mp4": "/CaminhosDoBemEstar/static/media/alongamento-gluteos-quadril.de169926918f009b0fd7.mp4",
     "static/media/alongamento-coxa.mp4": "/CaminhosDoBemEstar/static/media/alongamento-coxa.4a1c478731ad0ce5dc85.mp4",
@@ -45,12 +45,12 @@
     "static/media/whatsapp.svg": "/CaminhosDoBemEstar/static/media/whatsapp.348fac8415b5df5915f7e7e6ced6ca2b.svg",
     "static/media/instagram.svg": "/CaminhosDoBemEstar/static/media/instagram.7fc093b78869eed11c417d40c6f232c6.svg",
     "index.html": "/CaminhosDoBemEstar/index.html",
-    "main.00fe7799.css.map": "/CaminhosDoBemEstar/static/css/main.00fe7799.css.map",
-    "main.41e92afe.js.map": "/CaminhosDoBemEstar/static/js/main.41e92afe.js.map",
+    "main.e9bb165a.css.map": "/CaminhosDoBemEstar/static/css/main.e9bb165a.css.map",
+    "main.d590fd9d.js.map": "/CaminhosDoBemEstar/static/js/main.d590fd9d.js.map",
     "453.5c6254c1.chunk.js.map": "/CaminhosDoBemEstar/static/js/453.5c6254c1.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.00fe7799.css",
-    "static/js/main.41e92afe.js"
+    "static/css/main.e9bb165a.css",
+    "static/js/main.d590fd9d.js"
   ]
 }
