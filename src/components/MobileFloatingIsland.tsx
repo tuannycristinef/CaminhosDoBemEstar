@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 
-type TabKey = "inicio" | "exercicios" | "alimentacao" | "bem-estar" | "sobre";
+type TabKey = "inicio" | "exercicios" | "alimentacao" | "bem-estar" | "calculadora" | "sobre" | "carteirinha";
 
 type MobileFloatingIslandProps = {
   activeTab: TabKey;
@@ -13,6 +13,8 @@ const menuItems: Array<{ key: TabKey; label: string; to: string }> = [
   { key: "exercicios", label: "Exercicios", to: "/exercicios" },
   { key: "alimentacao", label: "Alimentacao", to: "/alimentacao" },
   { key: "bem-estar", label: "Bem-Estar", to: "/bem-estar" },
+  { key: "calculadora", label: "Minha rotina", to: "/calculadora" },
+  { key: "carteirinha", label: "Carteirinha", to: "/carteirinha" },
   { key: "sobre", label: "Sobre nós", to: "/sobre" },
 ];
 

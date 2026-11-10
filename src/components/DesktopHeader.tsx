@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 
-type HeaderTabKey = "inicio" | "exercicios" | "alimentacao" | "bem-estar" | "sobre";
+type HeaderTabKey = "inicio" | "exercicios" | "alimentacao" | "bem-estar" | "calculadora" | "sobre" | "carteirinha";
 
 type DesktopHeaderProps = {
   activeTab: HeaderTabKey;
@@ -13,6 +13,8 @@ const navItems: Array<{ key: HeaderTabKey; label: string; to: string }> = [
   { key: "exercicios", label: "Exercícios", to: "/exercicios" },
   { key: "alimentacao", label: "Alimentação", to: "/alimentacao" },
   { key: "bem-estar", label: "Bem-Estar", to: "/bem-estar" },
+  { key: "calculadora", label: "Minha rotina", to: "/calculadora" },
+  { key: "carteirinha", label: "Carteirinha", to: "/carteirinha" },
   { key: "sobre", label: "Sobre nós", to: "/sobre" },
 ];
 
