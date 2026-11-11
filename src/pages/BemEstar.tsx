@@ -83,12 +83,10 @@ export default function BemEstar() {
   };
 
   // Separação lógica baseada no campo 'tema'
-  // Aba 1: Conteúdos gerais existentes (tema diferente de "Saúde Mental")
   const praticasEFitoterapia = atividades.filter(
     (item) => item.tema !== "Saúde Mental"
   );
 
-  // Aba 2: Novos infográficos focados em Saúde Mental (tema === "Saúde Mental")
   const infograficosSaudeMental = atividades.filter(
     (item) => item.tema === "Saúde Mental"
   );
@@ -166,7 +164,7 @@ export default function BemEstar() {
           </div>
         )}
 
-        {/* Sub-aba 1: Práticas & Guia (Conteúdo que já existia) */}
+        {/* Sub-aba 1: Práticas & Guia (Conteúdo textual que já existia) */}
         {!carregando && !erro && subAba === "praticas" && (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {praticasEFitoterapia.length > 0 ? (
@@ -230,19 +228,6 @@ export default function BemEstar() {
                         )}
                       </div>
                     </div>
-
-                    {imgSrc && (
-                      <div className="p-5 pt-0">
-                        <button
-                          type="button"
-                          onClick={() => setImagemModal({ src: imgSrc, titulo: item.titulo })}
-                          className="flex w-full items-center justify-center gap-2 rounded-xl bg-purple-50 py-2.5 text-xs font-bold text-purple-700 transition-colors hover:bg-purple-100"
-                        >
-                          <BookOpen size={16} />
-                          Abrir Infográfico Completo
-                        </button>
-                      </div>
-                    )}
                   </div>
                 );
               })
@@ -254,7 +239,7 @@ export default function BemEstar() {
           </div>
         )}
 
-        {/* Sub-aba 2: Saúde Mental (Novos infográficos de Saúde Mental) */}
+        {/* Sub-aba 2: Saúde Mental (EXCLUSIVAMENTE OS CARDS DE IMAGEM) */}
         {!carregando && !erro && subAba === "saude-mental" && (
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {infograficosSaudeMental.length > 0 ? (
@@ -263,55 +248,27 @@ export default function BemEstar() {
                 return (
                   <div
                     key={item.id}
-                    className="group flex flex-col justify-between overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-all hover:shadow-md"
+                    onClick={() => imgSrc && setImagemModal({ src: imgSrc, titulo: item.titulo })}
+                    className="group relative cursor-pointer overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-all hover:scale-[1.02] hover:shadow-lg"
                   >
-                    <div>
-                      {imgSrc ? (
-                        <div
-                          onClick={() => setImagemModal({ src: imgSrc, titulo: item.titulo })}
-                          className="relative h-52 w-full cursor-pointer bg-purple-50 overflow-hidden"
-                        >
-                          <img
-                            src={imgSrc}
-                            alt={item.titulo}
-                            className="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
-                          />
-                          <div className="absolute inset-0 bg-slate-900/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                            <span className="flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1.5 text-xs font-bold text-purple-900 shadow-md">
-                              <Maximize2 size={14} className="text-purple-600" />
-                              Toque para ampliar
-                            </span>
-                          </div>
+                    {imgSrc ? (
+                      <div className="relative h-80 w-full bg-purple-50">
+                        <img
+                          src={imgSrc}
+                          alt={item.titulo}
+                          className="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
+                        />
+                        {/* Overlay com indicação de ampliação ao passar o mouse ou tocar */}
+                        <div className="absolute inset-0 bg-purple-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-4">
+                          <span className="flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 text-xs font-bold text-purple-900 shadow-md">
+                            <Maximize2 size={16} className="text-purple-600" />
+                            Toque para ampliar
+                          </span>
                         </div>
-                      ) : (
-                        <div className="flex h-40 w-full items-center justify-center bg-purple-100 text-purple-600">
-                          <BookOpen size={40} />
-                        </div>
-                      )}
-
-                      <div className="p-5">
-                        <span className="rounded-full bg-purple-50 px-2.5 py-1 text-xs font-semibold text-purple-700">
-                          {item.tema || "Saúde Mental"}
-                        </span>
-                        <h3 className="mt-2 text-lg font-bold text-gray-900 leading-snug">
-                          {item.titulo}
-                        </h3>
-                        <p className="mt-2 text-sm text-gray-600 line-clamp-3 leading-relaxed">
-                          {item.descricao}
-                        </p>
                       </div>
-                    </div>
-
-                    {imgSrc && (
-                      <div className="p-5 pt-0">
-                        <button
-                          type="button"
-                          onClick={() => setImagemModal({ src: imgSrc, titulo: item.titulo })}
-                          className="flex w-full items-center justify-center gap-2 rounded-xl bg-purple-50 py-2.5 text-xs font-bold text-purple-700 transition-colors hover:bg-purple-100"
-                        >
-                          <BookOpen size={16} />
-                          Abrir Infográfico Completo
-                        </button>
+                    ) : (
+                      <div className="flex h-80 w-full items-center justify-center bg-purple-100 text-purple-600">
+                        <BookOpen size={48} />
                       </div>
                     )}
                   </div>
