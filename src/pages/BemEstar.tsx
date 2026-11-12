@@ -1,44 +1,68 @@
 import React, { useState, useEffect } from "react";
-import MobileFloatingIsland from "../components/MobileFloatingIsland";
-import DesktopHeader from "../components/DesktopHeader";
-
-// 1. Importamos a ligação ao banco de dados e as ferramentas de busca
-import { db } from "../firebase";
 import { collection, getDocs } from "firebase/firestore";
+import { 
+  Sparkles, 
+  Brain, 
+  Leaf, 
+  Maximize2, 
+  X, 
+  Clock, 
+  CheckCircle2, 
+  LoaderCircle,
+  BookOpen
+} from "lucide-react";
+import { db } from "../firebase";
+import DesktopHeader from "../components/DesktopHeader";
+import MobileFloatingIsland from "../components/MobileFloatingIsland";
 
-interface AtividadeBemEstar {
+export interface AtividadeBemEstar {
   id: string;
   titulo: string;
   descricao: string;
   passos: string[];
   imagem?: string;
+  tema?: string;
+  foco?: string;
+  tempo?: string;
 }
 
 export default function BemEstar() {
-  // A memória temporária do ecrã
   const [atividades, setAtividades] = useState<AtividadeBemEstar[]>([]);
   const [carregando, setCarregando] = useState(true);
+  const [erro, setErro] = useState(false);
 
-  //Vai ao Firebase procurar os dados assim que o ecrã abre
+  // Controle de exibição de sub-abas internas
+  const [subAba, setSubAba] = useState<"praticas" | "saude-mental">("praticas");
+
+  // Estado para o modal Lightbox de imagens
+  const [imagemModal, setImagemModal] = useState<{ src: string; titulo: string } | null>(null);
+
   useEffect(() => {
     const fetchAtividades = async () => {
       try {
-        // Aponta para a coleção (pasta) "atividades_bem_estar" no Firebase
-        const atividadesCollection = collection(db, 'atividades_bem_estar');
+        const atividadesCollection = collection(db, "atividades_bem_estar");
         const atividadesSnapshot = await getDocs(atividadesCollection);
-        
-        // Converte os documentos do Firebase para a nossa Interface
-        const atividadesList = atividadesSnapshot.docs.map(doc => ({
-          id: doc.id,
-          titulo: doc.data().titulo,
-          descricao: doc.data().descricao,
-          passos: doc.data().passos || [],
-          imagem: doc.data().imagem || "",
-        })) as AtividadeBemEstar[];
+
+        const atividadesList = atividadesSnapshot.docs
+          .map((doc) => {
+            const data = doc.data();
+            return {
+              id: doc.id,
+              titulo: data.titulo || "",
+              descricao: data.descricao || "",
+              passos: Array.isArray(data.passos) ? data.passos : [],
+              imagem: data.imagem || "",
+              tema: data.tema || "Geral",
+              foco: data.foco || "",
+              tempo: data.tempo || "",
+            };
+          })
+          .filter((item) => item.titulo) as AtividadeBemEstar[];
 
         setAtividades(atividadesList);
       } catch (error) {
         console.error("Erro ao buscar atividades de bem-estar:", error);
+        setErro(true);
       } finally {
         setCarregando(false);
       }
@@ -47,97 +71,256 @@ export default function BemEstar() {
     fetchAtividades();
   }, []);
 
+  // Resolução dinâmica de imagens locais na pasta src/assets/bem-estar/
+  const resolverImagem = (nomeImagem?: string) => {
+    if (!nomeImagem) return null;
+    if (nomeImagem.startsWith("http")) return nomeImagem;
+    try {
+      return require(`../assets/bem-estar/${nomeImagem}`);
+    } catch {
+      return null;
+    }
+  };
+
+  // Separação lógica baseada no campo 'tema'
+  const praticasEFitoterapia = atividades.filter(
+    (item) => item.tema !== "Saúde Mental"
+  );
+
+  const infograficosSaudeMental = atividades.filter(
+    (item) => item.tema === "Saúde Mental"
+  );
+
   return (
     <div className="w-full min-h-screen bg-gray-50 pt-24 font-sans md:pt-0">
       <DesktopHeader activeTab="bem-estar" />
-
       <MobileFloatingIsland activeTab="bem-estar" />
 
-      <main className="mx-auto max-w-5xl px-4 py-10">
-        <h1 className="text-center text-5xl font-bold text-purple-500 mb-10 md:text-6xl">
-          Bem-Estar
-        </h1>
-        
-        <div className="h-0.5 w-full bg-purple-400 mb-8" />
-
-        {/* Filtros - Mantidos da tua interface original */}
-        <div className="flex flex-wrap justify-center gap-4 mb-8 max-w-4xl mx-auto">
-          <div className="relative">
-            <select className="appearance-none bg-[#e2e2e2] text-[#8A4FFF] font-semibold py-2 pl-6 pr-10 rounded-full outline-none cursor-pointer">
-              <option>Tema</option>
-            </select>
-            <svg className="w-4 h-4 text-[#8A4FFF] absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" />
-            </svg>
+      <main className="mx-auto max-w-6xl px-4 py-8">
+        {/* Título Principal */}
+        <div className="mx-auto mb-8 max-w-3xl text-center">
+          <div className="mx-auto mb-3 flex h-14 w-14 items-center justify-center rounded-2xl bg-purple-100 text-purple-600">
+            <Sparkles size={28} />
           </div>
-          <div className="relative">
-            <select className="appearance-none bg-[#e2e2e2] text-[#8A4FFF] font-semibold py-2 pl-6 pr-10 rounded-full outline-none cursor-pointer">
-              <option>Tempo</option>
-            </select>
-            <svg className="w-4 h-4 text-[#8A4FFF] absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" />
-            </svg>
-          </div>
-          <div className="relative">
-            <select className="appearance-none bg-[#e2e2e2] text-[#8A4FFF] font-semibold py-2 pl-6 pr-10 rounded-full outline-none cursor-pointer">
-              <option>Foco</option>
-            </select>
-            <svg className="w-4 h-4 text-[#8A4FFF] absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7" />
-            </svg>
-          </div>
+          <h1 className="text-3xl font-bold text-purple-900 md:text-4xl">
+            Caminhos do Bem-Estar
+          </h1>
+          <p className="mt-2 text-base text-gray-600">
+            Orientações de fitoterapia, saúde mental e guias ilustrados para apoiar o seu dia a dia com a fibromialgia.
+          </p>
         </div>
 
-        {/* Renderização da lista a partir da Base de Dados */}
-        <div className="flex flex-col gap-6 w-full">
-          {carregando ? (
-            <p className="text-center text-gray-500 font-medium">A carregar atividades...</p>
-          ) : atividades.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-10">
-              <span className="text-6xl mb-4">🧘‍♂️</span>
-              <p className="text-xl font-medium text-gray-500">Nenhuma atividade no banco de dados.</p>
+        {/* Sub-abas de Navegação Interna */}
+        <div className="mx-auto mb-8 flex max-w-md rounded-2xl bg-gray-200/80 p-1.5 shadow-inner">
+          <button
+            type="button"
+            onClick={() => setSubAba("praticas")}
+            className={`flex flex-1 items-center justify-center gap-2 rounded-xl py-3 text-sm font-bold transition-all duration-200 ${
+              subAba === "praticas"
+                ? "bg-white text-purple-900 shadow-sm"
+                : "text-gray-600 hover:text-gray-900"
+            }`}
+          >
+            <Leaf size={18} className={subAba === "praticas" ? "text-purple-600" : ""} />
+            Práticas & Guia
+            {praticasEFitoterapia.length > 0 && (
+              <span className="rounded-full bg-purple-100 px-2 py-0.5 text-xs text-purple-700">
+                {praticasEFitoterapia.length}
+              </span>
+            )}
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setSubAba("saude-mental")}
+            className={`flex flex-1 items-center justify-center gap-2 rounded-xl py-3 text-sm font-bold transition-all duration-200 ${
+              subAba === "saude-mental"
+                ? "bg-white text-purple-900 shadow-sm"
+                : "text-gray-600 hover:text-gray-900"
+            }`}
+          >
+            <Brain size={18} className={subAba === "saude-mental" ? "text-purple-600" : ""} />
+            Saúde Mental
+            {infograficosSaudeMental.length > 0 && (
+              <span className="rounded-full bg-purple-100 px-2 py-0.5 text-xs text-purple-700">
+                {infograficosSaudeMental.length}
+              </span>
+            )}
+          </button>
+        </div>
+
+        {/* Indicador de Carregamento */}
+        {carregando && (
+          <div className="flex flex-col items-center justify-center py-16 text-gray-500">
+            <LoaderCircle className="animate-spin mb-2" size={32} />
+            <p className="text-sm font-medium">A carregar conteúdos de bem-estar...</p>
+          </div>
+        )}
+
+        {/* Mensagem de Erro */}
+        {erro && !carregando && (
+          <div className="rounded-2xl bg-red-50 p-6 text-center text-red-700 border border-red-200">
+            Não foi possível carregar os conteúdos no momento. Tente novamente mais tarde.
+          </div>
+        )}
+
+        {/* Sub-aba 1: Práticas & Guia (Conteúdo textual que já existia) */}
+        {!carregando && !erro && subAba === "praticas" && (
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {praticasEFitoterapia.length > 0 ? (
+              praticasEFitoterapia.map((item) => {
+                const imgSrc = resolverImagem(item.imagem);
+                return (
+                  <div
+                    key={item.id}
+                    className="group flex flex-col justify-between overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-all hover:shadow-md"
+                  >
+                    <div>
+                      {imgSrc && (
+                        <div
+                          onClick={() => setImagemModal({ src: imgSrc, titulo: item.titulo })}
+                          className="relative h-48 w-full cursor-pointer bg-purple-50 overflow-hidden"
+                        >
+                          <img
+                            src={imgSrc}
+                            alt={item.titulo}
+                            className="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
+                          />
+                          <div className="absolute inset-0 bg-slate-900/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                            <span className="flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1.5 text-xs font-bold text-purple-900 shadow-md">
+                              <Maximize2 size={14} className="text-purple-600" />
+                              Toque para ampliar
+                            </span>
+                          </div>
+                        </div>
+                      )}
+
+                      <div className="p-5">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="rounded-full bg-purple-50 px-2.5 py-1 text-xs font-semibold text-purple-700">
+                            {item.tema || "Geral"}
+                          </span>
+                          {item.tempo && (
+                            <span className="flex items-center gap-1 text-xs text-gray-400">
+                              <Clock size={14} />
+                              {item.tempo}
+                            </span>
+                          )}
+                        </div>
+
+                        <h3 className="text-lg font-bold text-gray-900 mb-2 leading-snug">
+                          {item.titulo}
+                        </h3>
+
+                        <p className="text-sm text-gray-600 leading-relaxed mb-4">
+                          {item.descricao}
+                        </p>
+
+                        {item.passos && item.passos.length > 0 && (
+                          <div className="space-y-2 rounded-xl bg-gray-50 p-3.5 border border-gray-100">
+                            {item.passos.map((passo, idx) => (
+                              <div key={idx} className="flex items-start gap-2 text-xs text-gray-700">
+                                <CheckCircle2 size={16} className="shrink-0 text-emerald-500 mt-0.5" />
+                                <span>{passo}</span>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                );
+              })
+            ) : (
+              <p className="col-span-full py-12 text-center text-gray-500 font-medium">
+                Nenhuma prática cadastrada no banco de dados.
+              </p>
+            )}
+          </div>
+        )}
+
+        {/* Sub-aba 2: Saúde Mental (EXCLUSIVAMENTE OS CARDS DE IMAGEM) */}
+        {!carregando && !erro && subAba === "saude-mental" && (
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {infograficosSaudeMental.length > 0 ? (
+              infograficosSaudeMental.map((item) => {
+                const imgSrc = resolverImagem(item.imagem);
+                return (
+                  <div
+                    key={item.id}
+                    onClick={() => imgSrc && setImagemModal({ src: imgSrc, titulo: item.titulo })}
+                    className="group relative cursor-pointer overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition-all hover:scale-[1.02] hover:shadow-lg"
+                  >
+                    {imgSrc ? (
+                      <div className="relative h-80 w-full bg-purple-50">
+                        <img
+                          src={imgSrc}
+                          alt={item.titulo}
+                          className="h-full w-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
+                        />
+                        {/* Overlay com indicação de ampliação ao passar o mouse ou tocar */}
+                        <div className="absolute inset-0 bg-purple-950/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-4">
+                          <span className="flex items-center gap-2 rounded-full bg-white/95 px-4 py-2 text-xs font-bold text-purple-900 shadow-md">
+                            <Maximize2 size={16} className="text-purple-600" />
+                            Toque para ampliar
+                          </span>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="flex h-80 w-full items-center justify-center bg-purple-100 text-purple-600">
+                        <BookOpen size={48} />
+                      </div>
+                    )}
+                  </div>
+                );
+              })
+            ) : (
+              <p className="col-span-full py-12 text-center text-gray-500 font-medium">
+                Nenhum infográfico de Saúde Mental cadastrado.
+              </p>
+            )}
+          </div>
+        )}
+
+        {/* Modal Lightbox em Tela Cheia */}
+        {imagemModal && (
+          <div
+            className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/90 p-2 sm:p-4 backdrop-blur-sm"
+            onClick={() => setImagemModal(null)}
+          >
+            <div 
+              className="flex w-full max-w-4xl items-center justify-between pb-3 px-2"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <h4 className="text-sm font-semibold text-white truncate max-w-[80%]">
+                {imagemModal.titulo}
+              </h4>
+              <button
+                type="button"
+                onClick={() => setImagemModal(null)}
+                className="rounded-full bg-white/20 p-2 text-white hover:bg-white/30 transition-colors"
+                aria-label="Fechar"
+              >
+                <X size={22} />
+              </button>
             </div>
-          ) : (
-            atividades.map((atividade) => (
-              <div key={atividade.id} className="bg-[#d1d5db] rounded-3xl p-6 flex flex-col md:flex-row items-center gap-8 max-w-4xl mx-auto transition-transform duration-300 hover:scale-[1.03] hover:shadow-md cursor-pointer w-full">
-                
-                
-              {/* Imagem ou Ícone Base */}
-                <div className="w-40 h-28 rounded-2xl bg-white flex items-center justify-center shrink-0 overflow-hidden shadow-sm">
-                  {atividade.imagem ? (
-                    <img 
-                      src={atividade.imagem} 
-                      alt={atividade.titulo} 
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-12 h-12 text-black">
-                      <circle cx="12" cy="12" r="10"></circle>
-                      <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
-                      <line x1="9" y1="9" x2="9.01" y2="9"></line>
-                      <line x1="15" y1="9" x2="15.01" y2="9"></line>
-                    </svg>
-                  )}
-                </div>
-                
-                {/* Informação Injetada Dinamicamente */}
-                <div className="flex-1 text-black text-center md:text-left">
-                  <h2 className="text-2xl font-bold mb-2">{atividade.titulo}</h2>
-                  <p className="mb-3 font-medium text-base">{atividade.descricao}</p>
-                  {/* Renderizando a lista de passos dinamicamente */}
-                  {atividade.passos && atividade.passos.length > 0 && (
-                    <ul className="list-disc list-inside text-sm font-medium space-y-1 text-left">
-                      {atividade.passos.map((passo, index) => (
-                        <li key={index}>{passo}</li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
 
-              </div>
-            ))
-          )}
-        </div>
+            <div
+              className="relative max-h-[85vh] max-w-full overflow-auto rounded-xl bg-slate-900"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src={imagemModal.src}
+                alt={imagemModal.titulo}
+                className="max-h-[85vh] w-auto object-contain rounded-lg"
+              />
+            </div>
+
+            <p className="mt-3 text-xs text-white/70">
+              Toque fora do infográfico ou no botão fechar para sair
+            </p>
+          </div>
+        )}
       </main>
     </div>
   );
