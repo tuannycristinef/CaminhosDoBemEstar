@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/CaminhosDoBemEstar/static/css/main.e9bb165a.css",
-    "main.js": "/CaminhosDoBemEstar/static/js/main.d590fd9d.js",
+    "main.css": "/CaminhosDoBemEstar/static/css/main.58b6eb50.css",
+    "main.js": "/CaminhosDoBemEstar/static/js/main.9be53090.js",
     "static/js/453.5c6254c1.chunk.js": "/CaminhosDoBemEstar/static/js/453.5c6254c1.chunk.js",
     "static/media/alongamento-gluteos-quadril.mp4": "/CaminhosDoBemEstar/static/media/alongamento-gluteos-quadril.de169926918f009b0fd7.mp4",
     "static/media/alongamento-coxa.mp4": "/CaminhosDoBemEstar/static/media/alongamento-coxa.4a1c478731ad0ce5dc85.mp4",
@@ -18,7 +18,14 @@
     "static/media/leonardo.jpeg": "/CaminhosDoBemEstar/static/media/leonardo.2d64df7b3ea307a14ee4.jpeg",
     "static/media/Vitamina_banana.jpg": "/CaminhosDoBemEstar/static/media/Vitamina_banana.34c9ebbcbf48f276723a.jpg",
     "static/media/Palitinhos.jpg": "/CaminhosDoBemEstar/static/media/Palitinhos.a2757d04ec2ffb29e2c8.jpg",
+    "static/media/Mudanças_internas.jpeg": "/CaminhosDoBemEstar/static/media/Mudanças_internas.3af60e7b153e373a1580.jpeg",
+    "static/media/Lidar_ansiedade.jpeg": "/CaminhosDoBemEstar/static/media/Lidar_ansiedade.5ddca037d481b1979b74.jpeg",
+    "static/media/Ressignificar.jpeg": "/CaminhosDoBemEstar/static/media/Ressignificar.163ef040e67863a7163e.jpeg",
+    "static/media/Fibro_Luto.jpeg": "/CaminhosDoBemEstar/static/media/Fibro_Luto.245a43bd83380eeab938.jpeg",
+    "static/media/Fibro_ansiedade.jpeg": "/CaminhosDoBemEstar/static/media/Fibro_ansiedade.8317b3b6ff2839249ff4.jpeg",
+    "static/media/hobbies.jpeg": "/CaminhosDoBemEstar/static/media/hobbies.c2f1dc4148a0e9b844ea.jpeg",
     "static/media/Ensopado_lentilha.jpg": "/CaminhosDoBemEstar/static/media/Ensopado_lentilha.37d2b6a3a59db46bf118.jpg",
+    "static/media/Fibro_emocoes.jpeg": "/CaminhosDoBemEstar/static/media/Fibro_emocoes.d684a8772ef26e0e3970.jpeg",
     "static/media/Chips_batata.jpg": "/CaminhosDoBemEstar/static/media/Chips_batata.1b1faa13e50df608fc5f.jpg",
     "static/media/Prato_colorido.jpg": "/CaminhosDoBemEstar/static/media/Prato_colorido.77c9ce99aab42dca3a50.jpg",
     "static/media/pain-person.png": "/CaminhosDoBemEstar/static/media/pain-person.8d389094f5ea6f29d2b4.png",
@@ -45,12 +52,12 @@
     "static/media/whatsapp.svg": "/CaminhosDoBemEstar/static/media/whatsapp.348fac8415b5df5915f7e7e6ced6ca2b.svg",
     "static/media/instagram.svg": "/CaminhosDoBemEstar/static/media/instagram.7fc093b78869eed11c417d40c6f232c6.svg",
     "index.html": "/CaminhosDoBemEstar/index.html",
-    "main.e9bb165a.css.map": "/CaminhosDoBemEstar/static/css/main.e9bb165a.css.map",
-    "main.d590fd9d.js.map": "/CaminhosDoBemEstar/static/js/main.d590fd9d.js.map",
+    "main.58b6eb50.css.map": "/CaminhosDoBemEstar/static/css/main.58b6eb50.css.map",
+    "main.9be53090.js.map": "/CaminhosDoBemEstar/static/js/main.9be53090.js.map",
     "453.5c6254c1.chunk.js.map": "/CaminhosDoBemEstar/static/js/453.5c6254c1.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.e9bb165a.css",
-    "static/js/main.d590fd9d.js"
+    "static/css/main.58b6eb50.css",
+    "static/js/main.9be53090.js"
   ]
 }
